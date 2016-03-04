@@ -44,7 +44,7 @@ Check that you have postgres installed by running `brew info postgres`. You shou
 ## Usage
 ###Automatic (recommended)
 ```
-echo '-m https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb --skip-bundle' > ~/.railsrc
+echo '-m https://raw.githubusercontent.com/elfassy/sb_app_generator/master/app_generator.rb --skip-bundle' > ~/.railsrc
 ```
 
 now you will use the generator by default
@@ -68,6 +68,3 @@ If you create a `~/.railsrc` file and wish to ignore it when creating a new app:
 ```
 rails new your_app_name --no-rc
 ```
-
-## Project Readme
-[Deploy instructions](https://github.com/smashingboxes/sb_app_generator/blob/master/templates/README.md)
