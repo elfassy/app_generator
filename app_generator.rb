@@ -164,6 +164,6 @@ remove_file 'public/index.html'
 
 git :init
 run "git add . > /dev/null"
-run "git rm config/secrets.yml"
+# run "git rm config/secrets.yml"
 run "git commit -m 'initial commit'  > /dev/null"
 
