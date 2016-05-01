@@ -105,8 +105,11 @@ get_from_master_repo 'app/assets/javascripts/application.js'
 get_from_master_repo 'config/secrets.yml'
 get_from_master_repo 'config/secrets_example.yml'
 
+# annotation
+get_from_master_repo 'lib/tasks/auto_annotate_models.rake'
+
 # Public pages
-get_from_master_repo 'public/400.html'
+get_from_master_repo 'public/404.html'
 get_from_master_repo 'public/422.html'
 get_from_master_repo 'public/500.html'
 
