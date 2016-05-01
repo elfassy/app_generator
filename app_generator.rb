@@ -84,16 +84,22 @@ gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
 EOS
 
 gsub_file 'config/environments/test.rb', /(\n\s*end)/, <<-EOS
+
+
   # Custom app configs
   config.x.host = 'localhost:3000'
 EOS
 
 gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
+
+
   # Custom app configs
   config.x.host = 'yourapp.com'
 EOS
 
 gsub_file 'config/environments/development.rb', /(\n\s*end)/, <<-EOS
+
+
   # Custom app configs
   config.x.host = 'localhost:3000'
 
