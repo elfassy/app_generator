@@ -15,16 +15,16 @@ end
 gem 'rails', '~> 4.2'
 gem 'foreman'
 gem 'dalli'
-gem 'exception_notification'
+# gem 'exception_notification'
 
 # SEO
 gem 'sitemap_generator'
 
 # Cron
-gem 'whenever', require: false
+# gem 'whenever', require: false
 
 # Server
-gem 'unicorn' #staging and production
+# gem 'unicorn'
 gem 'thin', group: :development
 
 #Database
@@ -43,9 +43,6 @@ gem 'simple_form', '~> 3.0'
 
 # Date and time
 gem 'chronic'
-
-# Settings (password)
-gem 'settingslogic'
 
 # Queues
 # gem 'queue_classic'

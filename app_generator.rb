@@ -44,11 +44,6 @@ get "#{@master_url}/git/.gitignore", '.gitignore'
 get_from_master_repo '.envrc'
 
 #modify application.rb
-
-gsub_file 'config/application.rb', %r{(^\s*class Application < Rails::Application)}, <<-EOS
-\\1
-    require_relative '../lib/env.rb'
-EOS
 gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ \(US\ \&\ Canada\)\'/, "config.time_zone = 'Eastern Time (US & Canada)'"
 gsub_file 'config/application.rb', /(\n\s*end\nend)/, <<-EOS
 
@@ -109,7 +104,11 @@ get_from_master_repo 'app/assets/javascripts/application.js'
 # settings
 get_from_master_repo 'config/secrets.yml'
 get_from_master_repo 'config/secrets_example.yml'
-get_from_master_repo 'lib/env.rb'
+
+# Public pages
+get_from_master_repo 'public/400.html'
+get_from_master_repo 'public/422.html'
+get_from_master_repo 'public/500.html'
 
 # Locales
 get_from_master_repo 'config/locales/en.yml'
@@ -140,16 +139,12 @@ empty_directory_with_keep_file 'app/views/application'
 get_from_master_repo 'app/views/application/robots.text.erb'
 get_from_master_repo 'config/sitemap.rb'
 
-# Run generators (after database creation)
-# generate 'simple_form:install --bootstrap'
-
-# if yes? 'Do you want to generate a root controller? [n]'
-#   name = ask('What should it be called? [main]').underscore
-#   name = "main" if name.empty?
-#   generate :controller, "#{name} index"
-#   route "root to: '#{name}\#index'"
-#   remove_file 'public/index.html'
-# end
+if yes? 'Do you want to generate a root controller? [n]'
+  name = ask('What should it be called? [main]').underscore
+  name = "main" if name.empty?
+  generate :controller, "#{name} index"
+  route "root to: '#{name}\#index'"
+end
 remove_file 'public/index.html'
 
 git :init
@@ -157,14 +152,3 @@ run "git add . > /dev/null"
 run "git rm config/secrets.yml"
 run "git commit -m 'initial commit'  > /dev/null"
 
-
-say "
-   _____                     _     _             ____                    
-  / ____|                   | |   (_)           |  _ \\                   
- | (___  _ __ ___   __ _ ___| |__  _ _ __   __ _| |_) | _____  _____ ___ 
-  \\___ \\| '_ ` _ \\ / _` / __| '_ \\| | '_ \\ / _` |  _ < / _ \\ \\/ / _ \\ __|
-  ____) | | | | | | (_| \\__ \\ | | | | | | | (_| | |_) | (_) >  <  __\\__ \
-  |_____/|_| |_| |_|\\__,_|___/_| |_|_|_| |_|\\__, |____/ \\___/_/\\_\\___|___/
-                                            __/ |                        
-                                           |___/                         
-"
