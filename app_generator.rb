@@ -51,7 +51,7 @@ gsub_file 'config/application.rb', /(\n\s*end\nend)/, <<-EOS
     config.middleware.use Rack::Attack
 
     # Email default url host
-    config.action_mailer.default_url_options = { :host => Env.host }
+    config.action_mailer.default_url_options = { :host => Rails.configuration.x.host }
 \\1
 
 EOS
@@ -83,8 +83,21 @@ gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
 \\1
 EOS
 
-gsub_file 'config/environments/development.rb', /(\n\s*end)/, <<-EOS
+gsub_file 'config/environments/test.rb', /(\n\s*end)/, <<-EOS
+  # Custom app configs
+  config.x.host = 'localhost:3000'
+EOS
 
+gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
+  # Custom app configs
+  config.x.host = 'yourapp.com'
+EOS
+
+gsub_file 'config/environments/development.rb', /(\n\s*end)/, <<-EOS
+  # Custom app configs
+  config.x.host = 'localhost:3000'
+
+  # Email
   config.action_mailer.delivery_method = :letter_opener
 
   #Uncomment to use absolute paths for assets, added for using asset pipeline in email templates.
@@ -101,9 +114,8 @@ gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)info/
 run "mv app/assets/stylesheets/application.css app/assets/stylesheets/application.css.scss"
 get_from_master_repo 'app/assets/javascripts/application.js'
 
-# settings
-get_from_master_repo 'config/secrets.yml'
-get_from_master_repo 'config/secrets_example.yml'
+# secrets
+run 'cp config/secrets.yml config/secrets_example.yml'
 
 # annotation
 get_from_master_repo 'lib/tasks/auto_annotate_models.rake'
