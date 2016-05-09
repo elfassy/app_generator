@@ -114,7 +114,7 @@ gsub_file 'config/environments/development.rb', /(\n\s*end)/, <<-EOS
 EOS
 
 run 'cp config/environments/production.rb config/environments/staging.rb'
-gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)info/, '\1error'
+gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)debug/, '\1error'
 
 # modify assets
 run "mv app/assets/stylesheets/application.css app/assets/stylesheets/application.css.scss"
