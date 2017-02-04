@@ -1,4 +1,4 @@
-# Smashing Boxes App generator
+# App generator
 Makes building apps faster and more fun!
 
 ## Features
@@ -59,7 +59,7 @@ rails new your_app_name --no-rc
 
 ###Manual
 ```
-rails new your_app_name -m https://raw.github.com/smashingboxes/sb_app_generator/master/app_generator.rb --skip-bundle
+rails new your_app_name -m https://raw.github.com/elfassy/sb_app_generator/master/app_generator.rb --skip-bundle
 ```
 
 
