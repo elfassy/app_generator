@@ -12,7 +12,7 @@ group :production, :staging do
   gem 'rack-cache', :require => 'rack/cache'
 end
 
-gem 'rails', '~> 4.2'
+gem 'rails', '~> 5.0'
 gem 'foreman'
 gem 'dalli'
 # gem 'exception_notification'
