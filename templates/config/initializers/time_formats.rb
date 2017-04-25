@@ -13,10 +13,6 @@ Time::DATE_FORMATS[:default] = "%b %d, %Y at %I:%M%P"       # Jul 29, 2013 at 11
 #Time::DATE_FORMATS[:default] = "%a, %d %b %Y %H:%M:%S %z"  # Sun, 3 Nov 2013 14:22:18 -0700
 #Time::DATE_FORMATS[:default] = "%d %b %H:%M"               # 3 Nov 14:22
 
-# DateTime
-# ----------------------------
-DateTime::DATE_FORMATS[:default] = Time::DATE_FORMATS[:default]
-
 # I18n.l handle nil
 # ----------------------------
 module I18n
