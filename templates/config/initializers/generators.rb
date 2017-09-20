@@ -1,9 +1,6 @@
 Rails.application.config.generators do |g|
   # MiniTest
-  g.test_framework :minitest, fixture: false
-
-  # Factory Girl
-  g.fixture_replacement :factory_girl
+  g.test_framework :minitest
 
   # Mute Rails
   ## stop Rails from generating empty asset files for every controller

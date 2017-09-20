@@ -30,5 +30,5 @@ if Rails.env.production?
     # end
   end
 
-  SitemapGenerator::Sitemap.ping_search_engines
+  # SitemapGenerator::Sitemap.ping_search_engines
 end

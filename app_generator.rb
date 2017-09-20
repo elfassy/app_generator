@@ -1,6 +1,6 @@
 # http://guides.rubyonrails.org/rails_application_templates.html
 
-@master_url = 'https://raw.githubusercontent.com/elfassy/sb_app_generator/master'
+@master_url = 'https://raw.githubusercontent.com/elfassy/app_generator/master'
 
 whoami = run('whoami', capture: true).strip
 

@@ -18,10 +18,16 @@
 #
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  active_admin:
+    powered_by: ''
+  date:
+    formats:
+      default: ! "%m/%d/%Y"
+      short: ! "%b %d"
+      long: ! "%B %d, %Y"
   time:
     formats:
-      default: ! '%B %d, %Y %I:%M%P'
-      long: ! '%a, %d %b %Y %H:%M:%S %z' 
+      default: ! "%b %d, %Y at %I:%M%P"
+      long: ! "%B %d, %Y %I:%M %p"
+      short: ! "%d %b %I:%M %p"

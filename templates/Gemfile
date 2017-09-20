@@ -1,18 +1,10 @@
 source 'https://rubygems.org'
 
-def darwin_only(require_as)
-  RUBY_PLATFORM.include?('darwin') && require_as
-end
+# group :production, :staging do
+#   gem 'rack-cache', :require => 'rack/cache'
+# end
 
-def linux_only(require_as)
-  RUBY_PLATFORM.include?('linux') && require_as
-end
-
-group :production, :staging do
-  gem 'rack-cache', :require => 'rack/cache'
-end
-
-gem 'rails', '~> 5.0'
+gem 'rails', '~> 5.1'
 gem 'foreman'
 gem 'dalli'
 # gem 'exception_notification'
@@ -25,8 +17,7 @@ gem 'sitemap_generator'
 
 # Server
 gem 'puma', '~> 3.0'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
+gem 'redis', '~> 3.0'
 
 #Database
 gem 'pg'
@@ -46,6 +37,7 @@ gem 'simple_form', '~> 3.0'
 gem 'chronic'
 
 # Queues
+gem 'sidekiq'
 # gem 'queue_classic'
 
 # Javascript
@@ -69,7 +61,6 @@ group :development do
   gem 'letter_opener'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'pry-byebug'
   gem 'rails-erd' #generates ERD model diagrams
   gem 'annotate'
   # gem 'meta_request' (might break file upload)
@@ -79,10 +70,9 @@ end
 group :development, :test do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'pry-rails'
+  gem 'pry-byebug'
   gem 'faker'
   gem 'minitest-rails'
-  gem 'factory_girl_rails'
   gem 'rb-fsevent',               require: darwin_only('rb-fsevent')
   gem 'terminal-notifier-guard',  require: darwin_only('terminal-notifier-guard')
   gem 'rb-inotify',               require: linux_only('rb-inotify')

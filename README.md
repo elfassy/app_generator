@@ -5,7 +5,7 @@ Makes building apps faster and more fun!
 - application.html in slim 
 - readme in markdown format with outline
 - test environment setup (gems and test_helper)
-- default Gemfile with SB recommended gems
+- default Gemfile with basic gems
 - basic site protection using rack-attack gem
 - set time format default to be human friendly
 - best practice .gitignore
@@ -31,7 +31,7 @@ Makes building apps faster and more fun!
 
 
 ## Prerequisites
-Make sure you have [Ruby 2.0+](http://www.ruby-lang.org/en/) (We recommend you install ruby using [rbenv](https://github.com/sstephenson/rbenv) or [RVM](https://github.com/sstephenson/rbenv)) and [Rails 4.0](http://rubyonrails.org/) installed
+Make sure you have [Ruby 2.3+](http://www.ruby-lang.org/en/) (We recommend you install ruby using [rbenv](https://github.com/sstephenson/rbenv) or [RVM](https://github.com/sstephenson/rbenv)) and [Rails 5.0](http://rubyonrails.org/) installed
 ```
 ruby -v
 rails -v
@@ -44,7 +44,7 @@ Check that you have postgres installed by running `brew info postgres`. You shou
 ## Usage
 ###Automatic (recommended)
 ```
-echo '-m https://raw.githubusercontent.com/elfassy/sb_app_generator/master/app_generator.rb --skip-bundle' > ~/.railsrc
+echo '-m https://raw.githubusercontent.com/elfassy/app_generator/master/app_generator.rb --skip-bundle' > ~/.railsrc
 ```
 
 now you will use the generator by default
@@ -59,7 +59,7 @@ rails new your_app_name --no-rc
 
 ###Manual
 ```
-rails new your_app_name -m https://raw.github.com/elfassy/sb_app_generator/master/app_generator.rb --skip-bundle
+rails new your_app_name -m https://raw.github.com/elfassy/app_generator/master/app_generator.rb --skip-bundle
 ```
 
 
