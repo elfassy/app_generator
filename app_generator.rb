@@ -1,51 +1,37 @@
 # http://guides.rubyonrails.org/rails_application_templates.html
+require "open-uri"
+require "json"
 
 @master_url = 'https://raw.githubusercontent.com/elfassy/app_generator/master'
 
 whoami = run('whoami', capture: true).strip
 
-def get_from_master_repo(file_path)
-    remove_file file_path
-    get "#{@master_url}/templates/#{file_path}", file_path
-end
-def get_from_file(file_path)
-    remove_file file_path
-    get "#{File.expand_path File.dirname(__FILE__)}/templates/#{file_path}", file_path
-end
+git :init
+run "git add . > /dev/null"
+run "git commit -m 'raw rails' > /dev/null"
 
-# Layout
+# Remove files
 remove_file 'app/views/layouts/application.html.erb'
-get_from_master_repo 'app/views/layouts/application.html.slim'
-
-# readme
 remove_file "README.rdoc"
-get_from_master_repo 'README.md'
-gsub_file 'README.md', /\{\{app_name\}\}/, app_name if app_name.present?
-
-# test
-empty_directory_with_keep_file 'test/factories'
-empty_directory 'test/support'
-get_from_master_repo 'test/test_helper.rb'
-get_from_master_repo 'Guardfile'
-get_from_master_repo 'config/initializers/generators.rb'
-
-# gemfile
-get_from_master_repo 'Gemfile'
-
-# Gem initializers
-get_from_master_repo 'config/initializers/time_formats.rb'
-get_from_master_repo 'config/initializers/rack-attack.rb'
-
-# gitignore
 remove_file ".gitignore"
-get "#{@master_url}/git/.gitignore", '.gitignore' 
+run "mv app/assets/stylesheets/application.css app/assets/stylesheets/application.scss"
 
-# Spring
-get_from_master_repo '.envrc'
+# empty_directory_with_keep_file 'test/factories'
+empty_directory 'test/support'
+
+# Replace with template files
+JSON.parse(open('https://api.github.com/repos/elfassy/app_generator/git/trees/master?recursive=1').read)['tree'].map{|x| x['path']}.each do |path|
+  next unless file_path = path.split('templates/')[1]
+  remove_file file_path
+  get "#{@master_url}/templates/#{file_path}", file_path
+end
 
 #modify application.rb
 gsub_file 'config/application.rb', /\#\ config\.time_zone\ \=\ \'Central\ Time\ \(US\ \&\ Canada\)\'/, "config.time_zone = 'Eastern Time (US & Canada)'"
 gsub_file 'config/application.rb', /(\n\s*end\nend)/, <<-EOS
+
+    # Background Jobs
+    config.active_job.queue_adapter = :sidekiq
 
     # Rack attack gem
     config.middleware.use Rack::Attack
@@ -116,31 +102,15 @@ EOS
 run 'cp config/environments/production.rb config/environments/staging.rb'
 gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)debug/, '\1error'
 
-# modify assets
-run "mv app/assets/stylesheets/application.css app/assets/stylesheets/application.css.scss"
-get_from_master_repo 'app/assets/javascripts/application.js'
-
 # secrets
 run 'cp config/secrets.yml config/secrets_example.yml'
 
-# annotation
-get_from_master_repo 'lib/tasks/auto_annotate_models.rake'
-
-# Public pages
-get_from_master_repo 'public/404.html'
-get_from_master_repo 'public/422.html'
-get_from_master_repo 'public/500.html'
-
-# Locales
-get_from_master_repo 'config/locales/en.yml'
 
 # bundle (before database creation)
 bundle_command('update') # also does bundle install
 
-get_from_master_repo 'Procfile'
 
 # Create database
-get_from_master_repo 'config/database.yml'
 run 'cp config/database.yml config/database_example.yml'
 # db_username = ask("Database Username [#{whoami}]: ").underscore
 # db_password = ask('Database Password []: ').underscore
@@ -157,8 +127,6 @@ rake('db:create:all')
 route "get '/robots', to: 'application\#robots', format: 'txt'"
 remove_file 'public/robots.txt'
 empty_directory_with_keep_file 'app/views/application'
-get_from_master_repo 'app/views/application/robots.text.erb'
-get_from_master_repo 'config/sitemap.rb'
 
 if yes? 'Do you want to generate a root controller? [n]'
   name = ask('What should it be called? [main]').underscore
@@ -168,8 +136,8 @@ if yes? 'Do you want to generate a root controller? [n]'
 end
 remove_file 'public/index.html'
 
-git :init
+gsub_file 'README.md', /\{\{app_name\}\}/, app_name if app_name.present?
+
 run "git add . > /dev/null"
-# run "git rm config/secrets.yml"
-run "git commit -m 'initial commit'  > /dev/null"
+run "git commit -m 'app generator'  > /dev/null"
 
