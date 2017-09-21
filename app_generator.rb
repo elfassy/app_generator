@@ -6,7 +6,6 @@ require "json"
 
 whoami = run('whoami', capture: true).strip
 
-git :init
 run "git add . > /dev/null"
 run "git commit -m 'raw rails' > /dev/null"
 
@@ -20,7 +19,7 @@ run "mv app/assets/stylesheets/application.css app/assets/stylesheets/applicatio
 empty_directory 'test/support'
 
 # Replace with template files
-JSON.parse(open('https://api.github.com/repos/elfassy/app_generator/git/trees/master?recursive=1').read)['tree'].map{|x| x['path']}.each do |path|
+JSON.parse(open('https://api.github.com/repos/elfassy/app_generator/git/trees/master?recursive=1').read)['tree'].select{|x| x["type"] != 'tree'}.map{|x| x['path']}.each do |path|
   next unless file_path = path.split('templates/')[1]
   remove_file file_path
   get "#{@master_url}/templates/#{file_path}", file_path
