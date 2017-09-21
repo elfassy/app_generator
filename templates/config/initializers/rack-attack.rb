@@ -11,7 +11,7 @@ class Rack::Attack
 
   # Block requests from php bots.
   # After 2 blocked requests in 10 minutes, block all requests from that IP for 1 week.
-  blacklist('php bots') do |req|
+  blocklist('php bots') do |req|
     # `filter` returns truthy value if request fails, or if it's from a previously banned IP
     # so the request is blocked
     Fail2Ban.filter(req.ip, :maxretry => 2, :findtime => 10.minutes, :bantime => 1.week) do

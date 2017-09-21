@@ -1,7 +1,11 @@
-@import "_variables";
-
 @import "fonts/_lato";
 $text-font-family: Lato, sans-serif !default;
 
+@import "_variables";
 @import "_mixins";
 @import "_components";
+
+.section {
+  max-width: 840px;
+  margin: auto;
+}

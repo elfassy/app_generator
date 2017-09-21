@@ -104,16 +104,11 @@ gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)debug
 # secrets
 run 'cp config/secrets.yml config/secrets_example.yml'
 
-
 # bundle (before database creation)
 bundle_command('update') # also does bundle install
 
-
 # Create database
 run 'cp config/database.yml config/database_example.yml'
-# db_username = ask("Database Username [#{whoami}]: ").underscore
-# db_password = ask('Database Password []: ').underscore
-# db_username = db_username.empty? ? whoami : db_username
 db_username = whoami
 db_password = ""
 gsub_file 'config/database.yml', /\{\{db_name\}\}/, app_name if app_name.present?
@@ -122,20 +117,21 @@ gsub_file 'config/database.yml', /\{\{db_password\}\}/, db_password
 
 rake('db:create:all')
 
-# Robots.txt with sitemap
 route "get '/robots', to: 'application\#robots', format: 'txt'"
 remove_file 'public/robots.txt'
 empty_directory_with_keep_file 'app/views/application'
 
-if yes? 'Do you want to generate a root controller? [n]'
-  name = ask('What should it be called? [main]').underscore
-  name = "main" if name.empty?
-  generate :controller, "#{name} index"
-  route "root to: '#{name}\#index'"
-end
+generate :controller, "main index"
+route "root to: 'main\#index'"
+
 remove_file 'public/index.html'
 
 gsub_file 'README.md', /\{\{app_name\}\}/, app_name if app_name.present?
+
+run "bundle exec rails generate simple_form:install"
+gsub_file 'config/initializers/simple_form.rb', /\#\ (config\.default_form_class\ \=\ )nil/, '\1"form"'
+gsub_file 'config/initializers/simple_form.rb', /(config\.button_class\ =\ )\'btn\'/, '\1"button"'
+gsub_file 'config/initializers/simple_form.rb', /(config\.wrappers\ \:default,\ class\:\ )\:input/, '\1"form-item"'
 
 run "git add . > /dev/null"
 run "git commit -m 'app generator'  > /dev/null"
