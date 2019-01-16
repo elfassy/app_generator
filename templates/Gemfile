@@ -27,7 +27,7 @@ gem 'slim'
 gem 'slim-rails', group: :development
 
 # Form helpers
-gem 'simple_form', '~> 3.0'
+gem 'simple_form', '~> 4.0'
 
 # Pagination
 # gem 'kaminari'
