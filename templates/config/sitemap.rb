@@ -1,7 +1,7 @@
 if Rails.env.production?
   
   # Set the host name for URL creation
-  SitemapGenerator::Sitemap.default_host = "http://#{Env.host}"
+  SitemapGenerator::Sitemap.default_host = "https://#{Env.host}"
 
   SitemapGenerator::Sitemap.create do
     # Put links creation logic here.

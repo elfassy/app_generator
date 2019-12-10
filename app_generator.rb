@@ -44,7 +44,6 @@ EOS
 # modify production.rb
 gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.x_sendfile_header\ \=\ \'X-Accel-Redirect\')/, '\1'
 gsub_file 'config/environments/production.rb', /\#\ (config\.cache_store\ \=\ \:mem_cache_store)/, '\1'
-gsub_file 'config/environments/production.rb', /\#\ (config\.action_dispatch\.rack_cache\ \=\ true)/, '\1'
 gsub_file 'config/environments/production.rb', /(\n\s*end)/, <<-EOS
 
   #   config.action_mailer.delivery_method = :smtp 
@@ -98,11 +97,10 @@ gsub_file 'config/environments/development.rb', /(\n\s*end)/, <<-EOS
 \\1
 EOS
 
-run 'cp config/environments/production.rb config/environments/staging.rb'
 gsub_file 'config/environments/production.rb', /(config\.log_level\ \=\ \:)debug/, '\1error'
 
 # secrets
-run 'cp config/secrets.yml config/secrets_example.yml'
+# run 'cp config/secrets.yml config/secrets_example.yml'
 
 # bundle (before database creation)
 bundle_command('update') # also does bundle install
